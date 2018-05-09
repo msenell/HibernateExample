@@ -5,6 +5,8 @@
  */
 package hibernateexample;
 
+import java.util.HashSet;
+
 
 /**
  *
@@ -16,10 +18,25 @@ public class HibernateExample {
     {
         HibernateUtil hnu = new HibernateUtil();
         DatabaseFunctions df = new DatabaseFunctions(hnu.getSessionFactory());
-        /* Veritabanına birkaç tane Employee eklenir. */
-        Integer empID1 = df.addEmployee("Zara", "Ali", 1000);
-        Integer empID2 = df.addEmployee("Daisy", "Das", 5000);
-        Integer empID3 = df.addEmployee("John", "Paul", 10000);
+        //1. çalışan için bir sertifika kümesi oluşturuluyor:
+        HashSet set1 = new HashSet();
+        set1.add(new Certificate("MCA"));
+        set1.add(new Certificate("MBA"));
+        set1.add(new Certificate("PMP"));
+        
+        // Veritabanına birkaç tane Employee eklenir.
+        Integer empID1 = df.addEmployee("Zara", "Ali", 1000, set1);
+        
+        //2. çalışan için bir sertifika kümesi oluşturuluyor:
+        HashSet set2 = new HashSet();
+        set2.add(new Certificate("BCA"));
+        set2.add(new Certificate("BA"));
+        
+        Integer empID2 = df.addEmployee("Daisy", "Das", 5000, set2);
+        
+        //3. çalışan için boş bir sertifika kümesi oluşturuluyor:
+        HashSet set3 = new HashSet();
+        Integer empID3 = df.addEmployee("John", "Paul", 10000, set3);
         
         //Employee tablosundaki kayıtlar listelenir:
         df.listEmployees();

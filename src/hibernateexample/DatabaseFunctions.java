@@ -5,6 +5,7 @@ package hibernateexample;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,7 +23,7 @@ public class DatabaseFunctions
         this.factory = factory;
     }
     /*
-        public Integer addEmployee(String fname, String lname, int salary):
+        public Integer addEmployee(String fname, String lname, int salary, Set certs):
         Tanım: 
             Kendisine parametre olarak gönderilen değerler ile bir Employee objesi oluşturan ve
             bu objeyi veritabanına yeni bir kayıt olarak ekleyen method.
@@ -30,10 +31,11 @@ public class DatabaseFunctions
             -fName: Employee'nin isim bilgisi.
             -lName: Employee'nin soyadı bilgisi.
             -salary: Employee'nin maaş bilgisi.
+            -certs : Employee'nin sahip olduğu sertifikaları tutan set değişkeni.
         Geri dönüş:
             -Integer: Eklenecek Employee'e atanan id bilgisi.
     */
-    public Integer addEmployee(String fName, String lName, int salary)
+    public Integer addEmployee(String fName, String lName, int salary, Set certs)
     {
         Session session = factory.openSession();
         Transaction tx = null;
@@ -43,6 +45,7 @@ public class DatabaseFunctions
         {
             tx = session.beginTransaction();
             Employee employee = new Employee(fName, lName, salary);
+            employee.setCertificates(certs);
             employeeID = (Integer) session.save(employee); 
             tx.commit();
         }catch(HibernateException e)
@@ -59,7 +62,7 @@ public class DatabaseFunctions
     /*
         public void listEmployees():
         Tanım:
-            EMPLOYEES tablosunda bulunan kayıtları Java ortamına Employee objeleri halinde çeken ve
+            EMPLOYEES ve CERTIFICATES tablolarında bulunan kayıtları Java ortamına Employee ve Certificate objeleri halinde çeken ve
             bunları ekrana yazdıran method.
     */
     public void listEmployees( )
@@ -76,7 +79,13 @@ public class DatabaseFunctions
                 Employee employee = (Employee) iterator.next(); 
                 System.out.print("First Name: " + employee.getFirstName()); 
                 System.out.print("  Last Name: " + employee.getLastName()); 
-                System.out.println("  Salary: " + employee.getSalary()); 
+                System.out.println("  Salary: " + employee.getSalary());
+                Set certificates = employee.getCertificates();
+                for(Iterator iterator2 = certificates.iterator(); iterator2.hasNext();)
+                {
+                    Certificate ctf = (Certificate) iterator2.next();
+                    System.out.println("Certificate : " + ctf.getName());
+                }
             }
             tx.commit();
         }catch(HibernateException e)
