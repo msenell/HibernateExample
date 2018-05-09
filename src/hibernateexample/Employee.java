@@ -3,13 +3,14 @@
  */
 package hibernateexample;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  *
  * @author senel
  */
-public class Employee
+public class Employee implements Serializable
 {
     //Tablodaki id sütununa karşılık gelir.
     private int id;
@@ -21,6 +22,8 @@ public class Employee
     private int salary;
     //One-to-Many ilişkisi ile tutulacak sertifika bilgileri:
     private Set certificates;
+    //Component olarak tanımlanacak adres bilgileri:
+    private Address address;
     
     public Employee(){}
     
@@ -79,5 +82,15 @@ public class Employee
     public void setCertificates(Set certificates)
     {
         this.certificates = certificates;
+    }
+    
+    public Address getAddress()
+    {
+        return this.address;
+    }
+    
+    public void setAddress(Address address)
+    {
+        this.address = address;
     }
 }

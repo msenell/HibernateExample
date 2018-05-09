@@ -19,6 +19,13 @@
             <one-to-many class = "hibernateexample.Certificate" />
         </set>
         
+        <component name = "address" class = "hibernateexample.Address">
+            <property name = "street" column = "street_name" type = "string"/>
+            <property name = "city" column = "city_name" type = "string"/>
+            <property name = "state" column = "state_name" type = "string"/>
+            <property name = "zipcode" column = "zipcode" type = "string"/>
+        </component>
+        
         <property name = "firstName" column = "first_name" type = "string"/>
         <property name = "lastName" column = "last_name" type = "string"/>
         <property name = "salary" column = "salary" type = "int"/>

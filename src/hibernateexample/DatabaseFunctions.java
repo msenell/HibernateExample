@@ -23,7 +23,7 @@ public class DatabaseFunctions
         this.factory = factory;
     }
     /*
-        public Integer addEmployee(String fname, String lname, int salary, Set certs):
+        public Integer addEmployee(String fname, String lname, int salary, Set certs, Address addr):
         Tanım: 
             Kendisine parametre olarak gönderilen değerler ile bir Employee objesi oluşturan ve
             bu objeyi veritabanına yeni bir kayıt olarak ekleyen method.
@@ -32,10 +32,11 @@ public class DatabaseFunctions
             -lName: Employee'nin soyadı bilgisi.
             -salary: Employee'nin maaş bilgisi.
             -certs : Employee'nin sahip olduğu sertifikaları tutan set değişkeni.
+            -addr : Employee tablosuna component olarak dahil olan adres bilgisi.
         Geri dönüş:
             -Integer: Eklenecek Employee'e atanan id bilgisi.
     */
-    public Integer addEmployee(String fName, String lName, int salary, Set certs)
+    public Integer addEmployee(String fName, String lName, int salary, Set certs, Address addr)
     {
         Session session = factory.openSession();
         Transaction tx = null;
@@ -46,6 +47,7 @@ public class DatabaseFunctions
             tx = session.beginTransaction();
             Employee employee = new Employee(fName, lName, salary);
             employee.setCertificates(certs);
+            employee.setAddress(addr);
             employeeID = (Integer) session.save(employee); 
             tx.commit();
         }catch(HibernateException e)
@@ -58,7 +60,7 @@ public class DatabaseFunctions
         }
         return employeeID;
     }
-    
+        
     /*
         public void listEmployees():
         Tanım:
@@ -80,6 +82,14 @@ public class DatabaseFunctions
                 System.out.print("First Name: " + employee.getFirstName()); 
                 System.out.print("  Last Name: " + employee.getLastName()); 
                 System.out.println("  Salary: " + employee.getSalary());
+                
+                Address add = employee.getAddress();
+                System.out.println("Address ");
+                System.out.println("\tStreet: " +  add.getStreet());
+                System.out.println("\tCity: " + add.getCity());
+                System.out.println("\tState: " + add.getState());
+                System.out.println("\tZipcode: " + add.getZipcode());
+                
                 Set certificates = employee.getCertificates();
                 for(Iterator iterator2 = certificates.iterator(); iterator2.hasNext();)
                 {

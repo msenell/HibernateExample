@@ -3,11 +3,13 @@
  */
 package hibernateexample;
 
+import java.io.Serializable;
+
 /**
  *
  * @author senel
  */
-public class Certificate 
+public class Certificate implements Serializable
 {
     //Sertifika ID'sine karşılık gelen değişken:
     private int id;
