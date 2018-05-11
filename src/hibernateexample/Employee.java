@@ -4,12 +4,26 @@
 package hibernateexample;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 
 /**
  *
  * @author senel
  */
+@Entity
+@Table(name = "EMPLOYEE")
 public class Employee implements Serializable
 {
     //Tablodaki id sütununa karşılık gelir.
@@ -21,7 +35,7 @@ public class Employee implements Serializable
     //Tablodaki salary sütununa karşılık gelir.
     private int salary;
     //One-to-Many ilişkisi ile tutulacak sertifika bilgileri:
-    private Set certificates;
+    private Set<Certificate> certificates;
     //Component olarak tanımlanacak adres bilgileri:
     private Address address;
     
@@ -34,6 +48,9 @@ public class Employee implements Serializable
         this.salary = salary;
     }
     
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     public int getId() 
     {
         return id;
@@ -43,7 +60,8 @@ public class Employee implements Serializable
     {
         this.id = id;
     }
-   
+    
+    @Column(name = "first_name")
     public String getFirstName() 
     {
         return firstName;
@@ -53,7 +71,8 @@ public class Employee implements Serializable
     {
         this.firstName = first_name;
     }
-   
+    
+    @Column(name = "last_name")
     public String getLastName() 
     {
         return lastName;
@@ -63,7 +82,8 @@ public class Employee implements Serializable
     {
         this.lastName = last_name;
     }
-   
+    
+    @Column(name = "salary")
     public int getSalary() 
     {
         return salary;
@@ -74,6 +94,11 @@ public class Employee implements Serializable
         this.salary = salary;
     }
     
+    @OneToMany(
+        mappedBy = "employee",
+        cascade = CascadeType.ALL,
+            targetEntity = Certificate.class
+    )
     public Set getCertificates()
     {
         return this.certificates;
@@ -84,6 +109,7 @@ public class Employee implements Serializable
         this.certificates = certificates;
     }
     
+    @Embedded
     public Address getAddress()
     {
         return this.address;
@@ -93,4 +119,6 @@ public class Employee implements Serializable
     {
         this.address = address;
     }
+    
+    
 }

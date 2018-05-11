@@ -3,6 +3,8 @@
  */
 package hibernateexample;
 
+import javax.persistence.Column;
+
 /**
  *
  * @author senel
@@ -35,6 +37,7 @@ public class Address
         this.id = id;
     }*/
    
+    @Column(name = "street_name")
     public String getStreet()
     {
         return street;
@@ -44,7 +47,8 @@ public class Address
     {
         this.street = street;
     }
-   
+    
+    @Column(name = "city_name")
     public String getCity()
     {
         return city;
@@ -54,7 +58,8 @@ public class Address
     {
         this.city = city;
     }
-   
+    
+    @Column(name = "state_name")
     public String getState()
     {
         return state;
@@ -64,7 +69,8 @@ public class Address
     {
         this.state = state;
     }
-   
+    
+    @Column(name = "zipcode")
     public String getZipcode() 
     {
        return zipcode;

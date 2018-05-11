@@ -30,8 +30,12 @@
          1234
       </property>
       
+      <property name="show_sql">true</property>
+      
       <!-- List of XML mapping files -->
-      <mapping resource = "hibernate.hbm.xml"/>
+      <!--<mapping resource = "hibernate.hbm.xml"/>-->
+      <mapping class = "hibernateexample.Employee" />
+      <mapping class = "hibernateexample.Certificate" />
       
    </session-factory>
 </hibernate-configuration>
